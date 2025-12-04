@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Habit Tracker</string>
+
+    <string name="dashboard_title">Moje nawyki</string>
+
+    <string name="settings_title">Ustawienia</string>
+
+    <string name="add_habit_title">Dodaj nowy nawyk</string>
+    <string name="habit_name_hint">Nazwa nawyku</string>
+    <string name="save_habit_button">ZAPISZ NAWYK</string>
+    <string name="habit_name_required">Nazwa nawyku jest wymagana</string>
+
+    <string name="delete_dialog_title">Usuń nawyk</string>
+    <string name="delete_dialog_message">Czy na pewno chcesz usunąć nawyk %s?</string>
+    <string name="delete_confirm">Usuń</string>
+    <string name="delete_cancel">Anuluj</string>
+</resources>
