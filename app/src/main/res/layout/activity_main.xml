@@ -20,6 +20,7 @@
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:background="?attr/colorSurface"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled"
