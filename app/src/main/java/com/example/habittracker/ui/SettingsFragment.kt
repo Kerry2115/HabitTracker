@@ -68,7 +68,6 @@ class SettingsFragment : Fragment() {
             navigationHost.navigateTo(Screen.Dashboard)
         }
 
-        // Tryb ciemny
         viewLifecycleOwner.lifecycleScope.launch {
             settingsManager.isDarkModeEnabled.collect { isDarkMode ->
                 binding.switchDarkMode.setOnCheckedChangeListener(null)
@@ -79,7 +78,6 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Powiadomienia - stan
         viewLifecycleOwner.lifecycleScope.launch {
             settingsManager.isReminderEnabled.collect { enabled ->
                 binding.switchReminders.setOnCheckedChangeListener(null)
@@ -94,7 +92,6 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Powiadomienia - czas
         viewLifecycleOwner.lifecycleScope.launch {
             settingsManager.reminderTime.collect { (hour, minute) ->
                 binding.textReminderTime.text = String.format("%02d:%02d", hour, minute)

@@ -22,7 +22,6 @@ class StartFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var navigationHost: NavigationHost
 
-    // Inicjalizacja ViewModel
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onAttach(context: Context) {
