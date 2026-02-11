@@ -1,5 +1,6 @@
 package com.example.habittracker.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.habittracker.api.RetrofitClient
 import com.example.habittracker.data.AuthResponse
 import com.example.habittracker.data.UserCredentials
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 
 class LoginViewModel : ViewModel() {
 
@@ -21,12 +25,17 @@ class LoginViewModel : ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.service.registerUser(credentials)
+                val response = withTimeout(10_000) {
+                    withContext(Dispatchers.IO) {
+                        RetrofitClient.service.registerUser(credentials)
+                    }
+                }
                 _authResult.postValue(response)
             } catch (e: Exception) {
-                _authResult.postValue(AuthResponse(success = false, message = "Błąd sieci: ${e.message}"))
+                Log.e("LoginViewModel", "Register failed", e)
+                _authResult.postValue(AuthResponse(success = false, message = "BĹ‚Ä…d sieci: ${e.message}"))
             } finally {
-                _isLoading.value = false
+                _isLoading.postValue(false)
             }
         }
     }
@@ -35,12 +44,17 @@ class LoginViewModel : ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.service.loginUser(credentials)
+                val response = withTimeout(10_000) {
+                    withContext(Dispatchers.IO) {
+                        RetrofitClient.service.loginUser(credentials)
+                    }
+                }
                 _authResult.postValue(response)
             } catch (e: Exception) {
-                _authResult.postValue(AuthResponse(success = false, message = "Błąd sieci: ${e.message}"))
+                Log.e("LoginViewModel", "Login failed", e)
+                _authResult.postValue(AuthResponse(success = false, message = "BĹ‚Ä…d sieci: ${e.message}"))
             } finally {
-                _isLoading.value = false
+                _isLoading.postValue(false)
             }
         }
     }

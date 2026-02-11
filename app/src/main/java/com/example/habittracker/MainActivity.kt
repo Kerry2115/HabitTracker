@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.habittracker.data.SettingsManager
 import com.example.habittracker.databinding.ActivityMainBinding
+import com.example.habittracker.ui.AddHabitFragment
 import com.example.habittracker.ui.DashboardFragment
+import com.example.habittracker.ui.ScannerFragment
 import com.example.habittracker.ui.SettingsFragment
 import com.example.habittracker.ui.SplashFragment
 import com.example.habittracker.ui.StartFragment
-import com.example.habittracker.ui.AddHabitFragment
+import com.example.habittracker.work.HabitReminderScheduler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -28,6 +30,7 @@ sealed class Screen {
     data object Dashboard : Screen()
     data object Settings : Screen()
     data object AddHabit : Screen()
+    data object Scanner : Screen()
 }
 
 // ----------------------------------------------------
@@ -36,17 +39,20 @@ class MainActivity : AppCompatActivity(), NavigationHost {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var settingsManager: SettingsManager
+    private var isBottomNavProgrammatic = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Musimy zainicjować menedżer przed super.onCreate, aby zastosować motyw
-        settingsManager = SettingsManager(applicationContext)
-
-        // Zastosowanie zapisanego motywu przed wczytaniem widoku
-        applyTheme()
-
         super.onCreate(savedInstanceState)
+
+        // Musimy zainicjowaÄ‡ menedĹĽer przed uĹĽyciem DataStore
+        settingsManager = SettingsManager(applicationContext)
+        // Zastosowanie zapisanego motywu (bez zapÄ™tlenia rekreacji)
+        applyTheme()
+        scheduleReminderIfEnabled()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupBottomNav()
 
         // Uruchamiamy ekran powitalny
         if (savedInstanceState == null) {
@@ -55,8 +61,8 @@ class MainActivity : AppCompatActivity(), NavigationHost {
     }
 
     private fun applyTheme() {
-        // Używamy coroutine, ale tylko do odczytu stanu.
-        // Jeśli ten kod jest poprawny, motyw powinien być stosowany globalnie.
+        // UĹĽywamy coroutine, ale tylko do odczytu stanu.
+        // JeĹ›li ten kod jest poprawny, motyw powinien byÄ‡ stosowany globalnie.
         lifecycleScope.launch {
             val isDarkMode = settingsManager.isDarkModeEnabled.first()
             val mode = if (isDarkMode) {
@@ -64,7 +70,19 @@ class MainActivity : AppCompatActivity(), NavigationHost {
             } else {
                 AppCompatDelegate.MODE_NIGHT_NO
             }
-            AppCompatDelegate.setDefaultNightMode(mode)
+            if (AppCompatDelegate.getDefaultNightMode() != mode) {
+                AppCompatDelegate.setDefaultNightMode(mode)
+            }
+        }
+    }
+
+    private fun scheduleReminderIfEnabled() {
+        lifecycleScope.launch {
+            val enabled = settingsManager.isReminderEnabled.first()
+            if (enabled) {
+                val (hour, minute) = settingsManager.reminderTime.first()
+                HabitReminderScheduler.scheduleDailyReminder(this@MainActivity, hour, minute)
+            }
         }
     }
 
@@ -75,10 +93,46 @@ class MainActivity : AppCompatActivity(), NavigationHost {
             Screen.Dashboard -> DashboardFragment.newInstance()
             Screen.Settings -> SettingsFragment.newInstance()
             Screen.AddHabit -> AddHabitFragment.newInstance()
+            Screen.Scanner -> ScannerFragment.newInstance()
+        }
+
+        binding.bottomNav.visibility = when (screen) {
+            Screen.Dashboard, Screen.Scanner -> android.view.View.VISIBLE
+            else -> android.view.View.GONE
         }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+
+        when (screen) {
+            Screen.Dashboard -> setBottomNavSelection(R.id.nav_habits)
+            Screen.Scanner -> setBottomNavSelection(R.id.nav_scanner)
+            else -> Unit
+        }
+    }
+
+    private fun setupBottomNav() {
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            if (isBottomNavProgrammatic) return@setOnItemSelectedListener true
+            when (item.itemId) {
+                R.id.nav_habits -> {
+                    navigateTo(Screen.Dashboard)
+                    true
+                }
+                R.id.nav_scanner -> {
+                    navigateTo(Screen.Scanner)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun setBottomNavSelection(itemId: Int) {
+        if (binding.bottomNav.selectedItemId == itemId) return
+        isBottomNavProgrammatic = true
+        binding.bottomNav.selectedItemId = itemId
+        isBottomNavProgrammatic = false
     }
 }

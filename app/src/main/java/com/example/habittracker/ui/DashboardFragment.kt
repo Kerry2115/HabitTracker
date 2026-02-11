@@ -95,9 +95,6 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
         }
     }
 
-    override fun onHabitProgressChanged(habit: Habit, isCompleted: Boolean) {
-        // Tu można dodać aktualizację postępu w bazie
-    }
 
     // Obsługa usuwania nawyku (z bazy danych)
     override fun onHabitDeleted(habit: Habit) {
@@ -117,4 +114,8 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
     }
 
     companion object { @JvmStatic fun newInstance() = DashboardFragment() }
+
+    override fun onHabitProgressChanged(habit: Habit, isChecked: Boolean) {
+        viewModel.updateHabitProgress(habit, isChecked)
+    }
 }

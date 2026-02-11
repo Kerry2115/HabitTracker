@@ -13,6 +13,7 @@ import com.example.habittracker.Screen
 import com.example.habittracker.data.UserCredentials
 import com.example.habittracker.databinding.FragmentStartBinding
 import com.example.habittracker.data.SessionManager
+import com.example.habittracker.work.ResetHabitsScheduler
 
 
 class StartFragment : Fragment() {
@@ -54,16 +55,7 @@ class StartFragment : Fragment() {
             performAuth(isRegister = true)
         }
 
-        // Obserwacja wyników z ViewModelu
-        viewModel.authResult.observe(viewLifecycleOwner) { response ->
-            Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
-            if (response.success) {
-                // Udane logowanie/rejestracja, przejdź do Dashboard
-                navigationHost.navigateTo(Screen.Dashboard)
-            }
-        }
-
-        // Obserwacja stanu ładowania
+        // Obserwacja stanu Ĺ‚adowania
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.loginButton.isEnabled = !isLoading
@@ -76,6 +68,7 @@ class StartFragment : Fragment() {
                 sessionManager.createLoginSession(response.userId ?: 0, binding.usernameEditText.text.toString())
 
                 Toast.makeText(requireContext(), "Zalogowano!", Toast.LENGTH_SHORT).show()
+                ResetHabitsScheduler.scheduleDailyReset(requireContext())
                 navigationHost.navigateTo(Screen.Dashboard)
             } else {
                 Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
@@ -88,7 +81,7 @@ class StartFragment : Fragment() {
         val password = binding.passwordEditText.text.toString().trim()
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(requireContext(), "Pola nazwy użytkownika i hasła nie mogą być puste.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pola nazwy uĹĽytkownika i hasĹ‚a nie mogÄ… byÄ‡ puste.", Toast.LENGTH_SHORT).show()
             return
         }
 

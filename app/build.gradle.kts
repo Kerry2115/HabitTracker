@@ -52,21 +52,30 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    // Retrofit (Klient HTTP)
+    // Retrofit (HTTP client)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
-    // Konwerter JSON (Gson) dla Retrofit
+    // JSON converter (Gson) for Retrofit
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    // Kotlin Coroutines (do asynchronicznych operacji sieciowych)
+    // Kotlin Coroutines (async network operations)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // ViewModel i LiveData (do zarządzania logiką UI i stanem)
+    // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    // Zapewnia funkcję 'by viewModels()' i 'by activityViewModels()'
-    implementation("androidx.fragment:fragment-ktx:1.6.2") // Użyj najnowszej stabilnej wersji
+    // 'by viewModels()' and 'by activityViewModels()'
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
-    // Zależności ViewModel, które już prawdopodobnie masz
+    // ViewModel deps (duplicate in original project)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+    // WorkManager (daily background reset)
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // CameraX + ML Kit Barcode Scanning
+    implementation("androidx.camera:camera-camera2:1.3.3")
+    implementation("androidx.camera:camera-lifecycle:1.3.3")
+    implementation("androidx.camera:camera-view:1.3.3")
+    implementation("com.google.mlkit:barcode-scanning:17.2.0")
 }

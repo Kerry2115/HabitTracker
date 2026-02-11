@@ -23,14 +23,14 @@ class HabitAdapter(
         fun bind(habit: Habit) {
             binding.habitName.text = habit.name
 
-            // Ustawienie paska postępu
+            // Ustawienie paska postepu
             binding.progressBar.progress = (habit.progress * 100).toInt()
 
             // Ustawienie checkboxa
             binding.habitCheckbox.setOnCheckedChangeListener(null)
             binding.habitCheckbox.isChecked = habit.progress >= 1.0f
 
-            // LOGIKA ZAZNACZANIA POSTĘPU
+            // LOGIKA ZAZNACZANIA POSTEPU
             binding.habitCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 val newProgress = if (isChecked) 1.0f else 0.0f
                 val updatedHabit = habit.copy(progress = newProgress)
@@ -42,14 +42,14 @@ class HabitAdapter(
 
                 updateListener.onHabitProgressChanged(updatedHabit, isChecked)
 
-                binding.progressBar.progress = (updatedHabit.progress * 100).toInt()
+                binding.progressBar.progress = (newProgress * 100).toInt()
             }
 
-            // LOGIKA USUWANIA (DŁUGIE KLIKNIĘCIE)
-            binding.root.setOnLongClickListener {
+            // Usuwanie z przycisku
+            binding.habitDeleteButton.setOnClickListener {
                 updateListener.onHabitDeleted(habit)
-                true
             }
+
         }
     }
 
@@ -68,7 +68,7 @@ class HabitAdapter(
 
     override fun getItemCount() = habits.size
 
-    // Funkcja do usuwania elementu (używana przez DashboardFragment)
+    // Funkcja do usuwania elementu (uzywana przez DashboardFragment)
     fun removeHabit(habit: Habit) {
         val index = habits.indexOf(habit)
         if (index != -1) {

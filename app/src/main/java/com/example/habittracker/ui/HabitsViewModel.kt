@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.habittracker.api.RetrofitClient
 import com.example.habittracker.data.Habit
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class HabitsViewModel : ViewModel() {
 
@@ -53,4 +54,30 @@ class HabitsViewModel : ViewModel() {
             }
         }
     }
+
+    fun updateHabitProgress(habit: Habit, isChecked: Boolean) {
+        val newProgress = if (isChecked) 1.0f else 0.0f
+        val updatedHabit = habit.copy(progress = newProgress)
+
+        val updatedList = _habits.value?.map {
+            if (it.id == habit.id) updatedHabit else it
+        }
+        _habits.postValue(updatedList ?: _habits.value)
+
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.service.updateHabit(updatedHabit)
+                if (response.success) {
+                    loadHabits(updatedHabit.user_id)
+                } else {
+                    Log.e("HabitsViewModel", "Update failed: ${response.message}")
+                    loadHabits(updatedHabit.user_id)
+                }
+            } catch (e: Exception) {
+                Log.e("HabitsViewModel", "Update failed", e)
+                loadHabits(updatedHabit.user_id)
+            }
+        }
+    }
+
 }

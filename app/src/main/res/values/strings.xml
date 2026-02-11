@@ -10,8 +10,27 @@
     <string name="save_habit_button">ZAPISZ NAWYK</string>
     <string name="habit_name_required">Nazwa nawyku jest wymagana</string>
 
-    <string name="delete_dialog_title">Usuń nawyk</string>
-    <string name="delete_dialog_message">Czy na pewno chcesz usunąć nawyk %s?</string>
-    <string name="delete_confirm">Usuń</string>
+    <string name="dark_mode_label">Tryb ciemny</string>
+    <string name="reminder_label">Powiadomienia o nawykach</string>
+    <string name="reminder_time_label">Godzina powiadomienia</string>
+    <string name="set_time_button">Ustaw</string>
+    <string name="logout_button">Wyloguj sie</string>
+    <string name="reminder_title">Przypomnienie o nawykach</string>
+    <string name="reminder_body">Masz nieodznaczone nawyki na dzisiaj.</string>
+    <string name="reminder_body_count">Masz niewypelnione nawyki: %d.</string>
+    <string name="reminder_channel_name">Powiadomienia o nawykach</string>
+    <string name="reminder_channel_desc">Przypomnienia o niewypelnionych nawykach</string>
+
+    <string name="delete_dialog_title">Usun nawyk</string>
+    <string name="delete_dialog_message">Czy na pewno chcesz usunac nawyk %s?</string>
+    <string name="delete_confirm">Usun</string>
     <string name="delete_cancel">Anuluj</string>
+    <string name="delete_habit">Usun nawyk</string>
+    <string name="nav_habits">Nawyki</string>
+    <string name="nav_scanner">Skaner</string>
+    <string name="product_name_label">Nazwa produktu</string>
+    <string name="brands_label">Marka</string>
+    <string name="ingredients_label">Sklad</string>
+    <string name="nutrients_label">Wartosci odzywcze</string>
+    <string name="rescan_button">Skanuj ponownie</string>
 </resources>

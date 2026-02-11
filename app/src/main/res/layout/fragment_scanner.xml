@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.ScannerFragment">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_margin="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        tools:text="Blad skanowania" />
+
+    <LinearLayout
+        android:id="@+id/result_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_name_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Produkt XYZ" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/brands_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_brands"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Marka" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/ingredients_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Skład..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/nutrients_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_nutrients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Wartosci odzywcze..." />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_rescan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/rescan_button" />
+
+</LinearLayout>
