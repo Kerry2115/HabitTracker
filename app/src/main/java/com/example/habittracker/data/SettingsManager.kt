@@ -10,14 +10,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Utworzenie obiektu DataStore na poziomie pliku
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class SettingsManager(context: Context) {
 
     private val dataStore = context.dataStore
 
-    // Klucze do przechowywania ustawien
     companion object {
         val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_enabled")
         val REMINDER_ENABLED_KEY = booleanPreferencesKey("reminder_enabled")
@@ -25,21 +23,18 @@ class SettingsManager(context: Context) {
         val REMINDER_MINUTE_KEY = intPreferencesKey("reminder_minute")
     }
 
-    // 1. Zapisywanie stanu trybu ciemnego
     suspend fun setDarkMode(isDarkMode: Boolean) {
         dataStore.edit { preferences ->
             preferences[DARK_MODE_KEY] = isDarkMode
         }
     }
 
-    // 2. Odczytywanie stanu trybu ciemnego jako Flow
     val isDarkModeEnabled: Flow<Boolean> = dataStore.data
         .map { preferences ->
             // Domyslnie tryb ciemny jest wylaczony (false)
             preferences[DARK_MODE_KEY] ?: false
         }
 
-    // 3. Zapisywanie/odczyt ustawien powiadomien
     suspend fun setReminderEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[REMINDER_ENABLED_KEY] = enabled

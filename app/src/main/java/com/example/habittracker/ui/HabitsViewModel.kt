@@ -14,7 +14,6 @@ class HabitsViewModel : ViewModel() {
     private val _habits = MutableLiveData<List<Habit>>()
     val habits: LiveData<List<Habit>> = _habits
 
-    // Pobiera nawyki z bazy
     fun loadHabits(userId: Int) {
         viewModelScope.launch {
             try {
@@ -26,14 +25,13 @@ class HabitsViewModel : ViewModel() {
         }
     }
 
-    // Dodaje nawyk do bazy
     fun addHabit(userId: Int, name: String) {
         viewModelScope.launch {
             try {
                 val newHabit = Habit(name = name, user_id = userId)
                 val response = RetrofitClient.service.addHabit(newHabit)
                 if (response.success) {
-                    loadHabits(userId) // Odśwież listę po dodaniu
+                    loadHabits(userId)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -41,13 +39,12 @@ class HabitsViewModel : ViewModel() {
         }
     }
 
-    // Usuwa nawyk z bazy
     fun deleteHabit(userId: Int, habit: Habit) {
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.service.deleteHabit(habit)
                 if (response.success) {
-                    loadHabits(userId) // Odśwież listę po usunięciu
+                    loadHabits(userId)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

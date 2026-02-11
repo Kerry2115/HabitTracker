@@ -22,8 +22,6 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
     private val binding get() = _binding!!
     private lateinit var navigationHost: NavigationHost
     private lateinit var sessionManager: SessionManager
-
-    // Używamy HabitsViewModel do komunikacji z bazą
     private val viewModel: HabitsViewModel by viewModels()
 
     private val REQUEST_KEY = "new_habit_request"
@@ -52,18 +50,14 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
 
         val userId = sessionManager.getUserId()
 
-        // 1. Inicjalizacja RecyclerView
         binding.recyclerViewHabits.layoutManager = LinearLayoutManager(context)
-        // Pusta lista na start, dane przyjdą z bazy
         val adapter = HabitAdapter(mutableListOf(), this)
         binding.recyclerViewHabits.adapter = adapter
 
-        // 2. Obserwacja danych z bazy - to sprawia, że nawyki nie znikają
         viewModel.habits.observe(viewLifecycleOwner) { habits ->
             adapter.updateData(habits)
         }
 
-        // 3. Pobierz nawyki dla zalogowanego użytkownika
         if (userId != -1) {
             viewModel.loadHabits(userId)
         }
@@ -96,7 +90,6 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
     }
 
 
-    // Obsługa usuwania nawyku (z bazy danych)
     override fun onHabitDeleted(habit: Habit) {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.delete_dialog_title))

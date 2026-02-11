@@ -16,10 +16,6 @@ import com.example.habittracker.work.HabitReminderScheduler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-// ----------------------------------------------------
-// KLUCZOWE INTERFEJSY I ENUMY
-// ----------------------------------------------------
-
 interface NavigationHost {
     fun navigateTo(screen: Screen)
 }

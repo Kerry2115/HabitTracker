@@ -17,11 +17,7 @@ class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
     private lateinit var navigationHost: NavigationHost
-
-    // Obiekt Handler do obsługi opóźnienia (odpowiednik LaunchedEffect i delay)
     private val handler = Handler(Looper.getMainLooper())
-
-    // Runnable, które zostanie wykonane po opóźnieniu
     private val runnable = Runnable {
         // onTimeout() z kodu Compose
         navigationHost.navigateTo(Screen.Start)

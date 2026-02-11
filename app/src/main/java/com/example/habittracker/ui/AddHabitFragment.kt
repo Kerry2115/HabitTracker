@@ -42,12 +42,10 @@ class AddHabitFragment : Fragment() {
 
         binding.toolbarAddHabit.title = getString(R.string.add_habit_title)
 
-        // OBSŁUGA PRZYCISKU WSTECZ NA TOOLBARZE
         binding.toolbarAddHabit.setNavigationOnClickListener {
             navigationHost.navigateTo(Screen.Dashboard)
         }
 
-        // Logika zapisu
         binding.saveButton.setOnClickListener {
             saveHabit()
         }
@@ -67,7 +65,6 @@ class AddHabitFragment : Fragment() {
 
         parentFragmentManager.setFragmentResult(REQUEST_KEY, result)
 
-        // Powrót do Dashboard po zapisie
         navigationHost.navigateTo(Screen.Dashboard)
     }
 

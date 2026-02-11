@@ -45,17 +45,14 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Przycisk Logowania
         binding.loginButton.setOnClickListener {
             performAuth(isRegister = false)
         }
 
-        // Przycisk Rejestracji
         binding.registerButton.setOnClickListener {
             performAuth(isRegister = true)
         }
 
-        // Obserwacja stanu Ĺ‚adowania
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.loginButton.isEnabled = !isLoading

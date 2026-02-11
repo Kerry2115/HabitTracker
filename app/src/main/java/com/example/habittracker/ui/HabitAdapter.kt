@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker.data.Habit
 import com.example.habittracker.databinding.ItemHabitBinding
 
-// Interfejs do komunikacji z Fragmentem (DashboardFragment)
 interface HabitUpdateListener {
     fun onHabitProgressChanged(habit: Habit, isCompleted: Boolean)
     fun onHabitDeleted(habit: Habit)
@@ -22,15 +21,9 @@ class HabitAdapter(
 
         fun bind(habit: Habit) {
             binding.habitName.text = habit.name
-
-            // Ustawienie paska postepu
             binding.progressBar.progress = (habit.progress * 100).toInt()
-
-            // Ustawienie checkboxa
             binding.habitCheckbox.setOnCheckedChangeListener(null)
             binding.habitCheckbox.isChecked = habit.progress >= 1.0f
-
-            // LOGIKA ZAZNACZANIA POSTEPU
             binding.habitCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 val newProgress = if (isChecked) 1.0f else 0.0f
                 val updatedHabit = habit.copy(progress = newProgress)
@@ -45,7 +38,6 @@ class HabitAdapter(
                 binding.progressBar.progress = (newProgress * 100).toInt()
             }
 
-            // Usuwanie z przycisku
             binding.habitDeleteButton.setOnClickListener {
                 updateListener.onHabitDeleted(habit)
             }
@@ -68,7 +60,6 @@ class HabitAdapter(
 
     override fun getItemCount() = habits.size
 
-    // Funkcja do usuwania elementu (uzywana przez DashboardFragment)
     fun removeHabit(habit: Habit) {
         val index = habits.indexOf(habit)
         if (index != -1) {

@@ -29,7 +29,6 @@ interface ApiService {
     @POST("delete_habit.php")
     suspend fun deleteHabit(@Body habit: Habit): AuthResponse
 
-    // TEJ LINII PRAWDOPODOBNIE CI BRAKOWAŁO:
     @POST("update_habit.php")
     suspend fun updateHabit(@Body habit: Habit): AuthResponse
 

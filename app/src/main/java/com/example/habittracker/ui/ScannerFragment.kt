@@ -130,7 +130,6 @@ class ScannerFragment : Fragment() {
                             }
                         }
                         .addOnFailureListener {
-                            // no-op
                         }
                         .addOnCompleteListener {
                             imageProxy.close()
