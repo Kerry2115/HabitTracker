@@ -31,7 +31,6 @@ class SettingsManager(context: Context) {
 
     val isDarkModeEnabled: Flow<Boolean> = dataStore.data
         .map { preferences ->
-            // Domyslnie tryb ciemny jest wylaczony (false)
             preferences[DARK_MODE_KEY] ?: false
         }
 

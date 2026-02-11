@@ -62,11 +62,9 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
             viewModel.loadHabits(userId)
         }
 
-        // 4. Obsługa dodawania z AddHabitFragment
         parentFragmentManager.setFragmentResultListener(REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             val newHabitName = bundle.getString(BUNDLE_KEY)
             if (newHabitName != null && userId != -1) {
-                // Zapisz do bazy przez ViewModel
                 viewModel.addHabit(userId, newHabitName)
             }
         }

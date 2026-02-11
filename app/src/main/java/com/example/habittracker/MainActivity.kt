@@ -29,7 +29,6 @@ sealed class Screen {
     data object Scanner : Screen()
 }
 
-// ----------------------------------------------------
 
 class MainActivity : AppCompatActivity(), NavigationHost {
 
@@ -40,9 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationHost {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Musimy zainicjowaÄ‡ menedĹĽer przed uĹĽyciem DataStore
         settingsManager = SettingsManager(applicationContext)
-        // Zastosowanie zapisanego motywu (bez zapÄ™tlenia rekreacji)
         applyTheme()
         scheduleReminderIfEnabled()
 
@@ -50,15 +47,12 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         setContentView(binding.root)
         setupBottomNav()
 
-        // Uruchamiamy ekran powitalny
         if (savedInstanceState == null) {
             navigateTo(Screen.Splash)
         }
     }
 
     private fun applyTheme() {
-        // UĹĽywamy coroutine, ale tylko do odczytu stanu.
-        // JeĹ›li ten kod jest poprawny, motyw powinien byÄ‡ stosowany globalnie.
         lifecycleScope.launch {
             val isDarkMode = settingsManager.isDarkModeEnabled.first()
             val mode = if (isDarkMode) {

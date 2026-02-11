@@ -19,7 +19,6 @@ class SplashFragment : Fragment() {
     private lateinit var navigationHost: NavigationHost
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
-        // onTimeout() z kodu Compose
         navigationHost.navigateTo(Screen.Start)
     }
 
@@ -43,7 +42,6 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Opóźnienie (2000L = 2 sekundy)
         handler.postDelayed(runnable, 2000L)
     }
 
