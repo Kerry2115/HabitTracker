@@ -14,7 +14,11 @@ import com.example.habittracker.Screen
 import com.example.habittracker.R
 import com.example.habittracker.data.Habit
 import com.example.habittracker.data.SessionManager
+import com.example.habittracker.data.SettingsManager
 import com.example.habittracker.databinding.FragmentDashboardBinding
+import java.time.LocalDate
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment(), HabitUpdateListener {
 
@@ -22,7 +26,9 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
     private val binding get() = _binding!!
     private lateinit var navigationHost: NavigationHost
     private lateinit var sessionManager: SessionManager
+    private lateinit var settingsManager: SettingsManager
     private val viewModel: HabitsViewModel by viewModels()
+    private var lastCompletionState: Boolean? = null
 
     private val REQUEST_KEY = "new_habit_request"
     private val BUNDLE_KEY = "new_habit_name"
@@ -35,6 +41,7 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
             throw RuntimeException("$context must implement NavigationHost")
         }
         sessionManager = SessionManager(context)
+        settingsManager = SettingsManager(context)
     }
 
     override fun onCreateView(
@@ -56,6 +63,20 @@ class DashboardFragment : Fragment(), HabitUpdateListener {
 
         viewModel.habits.observe(viewLifecycleOwner) { habits ->
             adapter.updateData(habits)
+            val userIdForCompletion = sessionManager.getUserId()
+            if (userIdForCompletion != -1) {
+                val allComplete = habits.isNotEmpty() && habits.all { it.progress >= 1.0f }
+                if (lastCompletionState != allComplete) {
+                    lastCompletionState = allComplete
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        settingsManager.setDayCompleted(
+                            userIdForCompletion,
+                            LocalDate.now(),
+                            allComplete
+                        )
+                    }
+                }
+            }
         }
 
         if (userId != -1) {

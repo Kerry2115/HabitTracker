@@ -5,6 +5,10 @@
         android:title="@string/nav_habits"
         android:icon="@android:drawable/ic_menu_agenda" />
     <item
+        android:id="@+id/nav_calendar"
+        android:title="@string/nav_calendar"
+        android:icon="@android:drawable/ic_menu_my_calendar" />
+    <item
         android:id="@+id/nav_scanner"
         android:title="@string/nav_scanner"
         android:icon="@android:drawable/ic_menu_camera" />

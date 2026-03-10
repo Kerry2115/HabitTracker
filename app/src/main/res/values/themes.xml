@@ -10,4 +10,16 @@
         <item name="android:windowBackground">#FFFFFF</item>
         <item name="colorOnSurface">#000000</item>
     </style>
+
+    <style name="CalendarDateText" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CalendarWeekdayText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CalendarHeaderText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

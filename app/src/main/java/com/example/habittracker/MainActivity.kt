@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.habittracker.data.SettingsManager
 import com.example.habittracker.databinding.ActivityMainBinding
 import com.example.habittracker.ui.AddHabitFragment
+import com.example.habittracker.ui.CalendarFragment
 import com.example.habittracker.ui.DashboardFragment
 import com.example.habittracker.ui.ScannerFragment
 import com.example.habittracker.ui.SettingsFragment
@@ -24,6 +25,7 @@ sealed class Screen {
     data object Splash : Screen()
     data object Start : Screen()
     data object Dashboard : Screen()
+    data object Calendar : Screen()
     data object Settings : Screen()
     data object AddHabit : Screen()
     data object Scanner : Screen()
@@ -81,13 +83,14 @@ class MainActivity : AppCompatActivity(), NavigationHost {
             Screen.Splash -> SplashFragment.newInstance()
             Screen.Start -> StartFragment.newInstance()
             Screen.Dashboard -> DashboardFragment.newInstance()
+            Screen.Calendar -> CalendarFragment.newInstance()
             Screen.Settings -> SettingsFragment.newInstance()
             Screen.AddHabit -> AddHabitFragment.newInstance()
             Screen.Scanner -> ScannerFragment.newInstance()
         }
 
         binding.bottomNav.visibility = when (screen) {
-            Screen.Dashboard, Screen.Scanner -> android.view.View.VISIBLE
+            Screen.Dashboard, Screen.Calendar, Screen.Scanner -> android.view.View.VISIBLE
             else -> android.view.View.GONE
         }
 
@@ -97,6 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationHost {
 
         when (screen) {
             Screen.Dashboard -> setBottomNavSelection(R.id.nav_habits)
+            Screen.Calendar -> setBottomNavSelection(R.id.nav_calendar)
             Screen.Scanner -> setBottomNavSelection(R.id.nav_scanner)
             else -> Unit
         }
@@ -108,6 +112,10 @@ class MainActivity : AppCompatActivity(), NavigationHost {
             when (item.itemId) {
                 R.id.nav_habits -> {
                     navigateTo(Screen.Dashboard)
+                    true
+                }
+                R.id.nav_calendar -> {
+                    navigateTo(Screen.Calendar)
                     true
                 }
                 R.id.nav_scanner -> {

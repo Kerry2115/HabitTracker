@@ -1,8 +1,8 @@
 <?php
 // connect.php
-$servername = "localhost";
-$username = "root"; 
-$password = "";     
+$servername = "sql308.host.adellya.my.id";
+$username = "Ilya_41356627_habit_db"; 
+$password = "5obohnq5";     
 $dbname = "habit_db"; // UPEWNIJ SIĘ, ŻE NAZWA PASUJE DO TWOJEJ BAZY
 
 $conn = new mysqli($servername, $username, $password, $dbname);

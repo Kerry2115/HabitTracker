@@ -29,6 +29,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -66,6 +67,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     // 'by viewModels()' and 'by activityViewModels()'
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // ViewModel deps (duplicate in original project)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -78,4 +80,12 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.3")
     implementation("androidx.camera:camera-view:1.3.3")
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
+
+    // Calendar view (JitPack)
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1") {
+        exclude(group = "com.android.support", module = "support-compat")
+    }
+
+    // Desugaring for java.time (minSdk < 26)
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }

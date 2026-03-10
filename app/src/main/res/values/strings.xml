@@ -27,6 +27,10 @@
     <string name="delete_cancel">Anuluj</string>
     <string name="delete_habit">Usun nawyk</string>
     <string name="nav_habits">Nawyki</string>
+    <string name="nav_calendar">Kalendarz</string>
+    <string name="calendar_title">Kalendarz</string>
+    <string name="streak_loading">Streak: ...</string>
+    <string name="streak_label">Streak: %d dni</string>
     <string name="nav_scanner">Skaner</string>
     <string name="product_name_label">Nazwa produktu</string>
     <string name="brands_label">Marka</string>
